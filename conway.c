@@ -49,12 +49,59 @@ void conway_add_point(Conway *conway,
 
 bool conway_update(Conway *conway)
 {
+    bool has_changed = false;
+    bool tmpbuffer[conway->height][conway->width];
+
+    unsigned int width = conway->width;
+    unsigned int height = conway->height;
+
     for (unsigned int i = 0; i < conway->height; ++i) {
         for (unsigned int j = 0; j < conway->width; ++j) {
-            // handle point
+
+            bool is_alive = conway->buffer[i][j];
+            tmpbuffer[i][j] = is_alive;
+
+            // Make the buffer continuous from the edges.
+            unsigned int prevrow = (i + height - 1) % height;
+            unsigned int nextrow = (i + height + 1) % height;
+            unsigned int prevcol = (j + width - 1) % width;
+            unsigned int nextcol = (j + width + 1) % width;
+
+            int up        = (int)conway->buffer[prevrow][j];
+            int down      = (int)conway->buffer[nextrow][j];
+            int left      = (int)conway->buffer[i][prevcol];
+            int right     = (int)conway->buffer[i][nextcol];
+            int upleft    = (int)conway->buffer[prevrow][prevcol];
+            int upright   = (int)conway->buffer[prevrow][nextcol];
+            int downleft  = (int)conway->buffer[nextrow][prevcol];
+            int downright = (int)conway->buffer[nextrow][nextcol];
+
+            int neighbours = up + down + left + right +
+                upleft + upright + downleft + downright;
+
+            if (is_alive && neighbours < 2) {
+                // Die by under-population.
+                tmpbuffer[i][j] = false;
+                has_changed = true;
+            } else if (is_alive && neighbours > 3) {
+                // Die by overcrowding.
+                tmpbuffer[i][j] = false;
+                has_changed = true;
+            } else if (!is_alive && neighbours == 3) {
+                // Become alive by reproduction.
+                tmpbuffer[i][j] = true;
+                has_changed = true;
+            }
+
         }
     }
-    return false;
+    // Copy the new iteration to the Conway's buffer.
+    for (unsigned int i = 0; i < conway->height; ++i) {
+        for (unsigned int j = 0; j < conway->width; ++j) {
+            conway->buffer[i][j] = tmpbuffer[i][j];
+        }
+    }
+    return has_changed;
 }
 
 void conway_print(Conway *conway)

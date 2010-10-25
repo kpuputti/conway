@@ -4,6 +4,7 @@
 
 #include "conway.h"
 
+// Initialize the buffer (pseudo)randomly.
 void randomize_buffer(Conway *conway)
 {
     conway_clear(conway);
@@ -17,13 +18,15 @@ void randomize_buffer(Conway *conway)
     }
 }
 
-void run(unsigned int count)
+void run()
 {
     Conway *conway = conway_create(20, 40);
-    while (count--) {
-        puts("-- Conway --");
-        //conway_update(conway);
-        randomize_buffer(conway);
+    randomize_buffer(conway);
+    bool has_changed = true;
+    unsigned int i = 0;
+    while (has_changed) {
+        printf("-- Conway iteration %3d --\n", i++);
+        has_changed = conway_update(conway);
         conway_print(conway);
         usleep(500000);
     }
@@ -32,8 +35,7 @@ void run(unsigned int count)
 
 int main(void)
 {
-    unsigned int count = 10;
-    run(count);
+    run();
     puts("Done.");
     return 0;
 }
