@@ -35,7 +35,7 @@ void run(unsigned int count)
 
 int main(void)
 {
-    unsigned int count = 100;
+    unsigned int count = 5000;
     run(count);
     puts("Done.");
     return 0;

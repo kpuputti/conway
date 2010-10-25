@@ -4,8 +4,8 @@
 
 #include "conway.h"
 
-Conway *conway_create(unsigned int height,
-                      unsigned int width)
+Conway *conway_create(const unsigned int height,
+                      const unsigned int width)
 {
     Conway *conway = malloc(sizeof(Conway));
     assert(conway);
@@ -104,7 +104,7 @@ bool conway_update(Conway *conway)
     return has_changed;
 }
 
-void conway_print(Conway *conway)
+void conway_print(const Conway *conway)
 {
     for (unsigned int i = 0; i < conway->height; ++i) {
         for (unsigned int j = 0; j < conway->width; ++j) {

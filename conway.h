@@ -11,8 +11,8 @@ typedef struct Conway_s {
 } Conway;
 
 // Create a new Conway with the given dimensions.
-Conway *conway_create(unsigned int height,
-                      unsigned int width);
+Conway *conway_create(const unsigned int height,
+                      const unsigned int width);
 
 // Free all memory allocated for the given Conway.
 void conway_destroy(Conway *conway);
@@ -31,6 +31,6 @@ void conway_add_point(Conway *conway,
 bool conway_update(Conway *conway);
 
 // Print out the Conway to stdout.
-void conway_print(Conway *conway);
+void conway_print(const Conway *conway);
 
 #endif /* _CONWAY_H_ */
