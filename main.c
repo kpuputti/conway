@@ -18,13 +18,13 @@ void randomize_buffer(Conway *conway)
     }
 }
 
-void run()
+void run(unsigned int count)
 {
-    Conway *conway = conway_create(20, 40);
+    Conway *conway = conway_create(40, 80);
     randomize_buffer(conway);
     bool has_changed = true;
     unsigned int i = 0;
-    while (has_changed) {
+    while (has_changed && count--) {
         printf("-- Conway iteration %3d --\n", i++);
         has_changed = conway_update(conway);
         conway_print(conway);
@@ -35,7 +35,8 @@ void run()
 
 int main(void)
 {
-    run();
+    unsigned int count = 100;
+    run(count);
     puts("Done.");
     return 0;
 }
