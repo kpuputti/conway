@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS=-std=c99 -g -pedantic -Wall -Wextra
+CFLAGS=-std=gnu99 -g -pedantic -Wall -Wextra
 
 conway: conway.h conway.h main.c
 	$(CC) $(CFLAGS) -o main conway.c main.c
