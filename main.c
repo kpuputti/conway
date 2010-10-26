@@ -10,8 +10,7 @@ void randomize_buffer(Conway *conway)
     conway_clear(conway);
     for (unsigned int i = 0; i < conway->height; ++i) {
         for (unsigned int j = 0; j < conway->width; ++j) {
-            int rand = random() % 100;
-            if (rand < 50) {
+            if (random() % 2 == 0) {
                 conway->buffer[i][j] = true;
             }
         }
